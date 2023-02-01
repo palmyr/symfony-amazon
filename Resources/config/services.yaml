@@ -1,0 +1,11 @@
+services:
+
+  Palmyr\SymfonyAws\Factory\SdkFactoryInterface:
+    class: Palmyr\SymfonyAws\Factory\SdkFactory
+
+  Aws\Sdk:
+    class: Aws\Sdk
+    factory:
+      - '@Palmyr\SymfonyAws\Factory\SdkFactoryInterface'
+      - 'build'
+
