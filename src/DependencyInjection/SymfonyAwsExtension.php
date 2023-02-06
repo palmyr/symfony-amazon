@@ -20,8 +20,12 @@ class SymfonyAwsExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . "/../../Resources/config"));
 
-        $loader->load("services.yaml");
-    }
+        $container->setParameter("palmyr.aws.sdk.options", $config["sdk"] ?? []);
 
+        $loader->load("services.yaml");
+        $loader->load("commands.yaml");
+
+
+    }
 
 }

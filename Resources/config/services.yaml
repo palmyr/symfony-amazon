@@ -5,7 +5,14 @@ services:
 
   Aws\Sdk:
     class: Aws\Sdk
+    arguments:
+      - '%palmyr.aws.sdk.options%'
     factory:
       - '@Palmyr\SymfonyAws\Factory\SdkFactoryInterface'
       - 'build'
+
+  Aws\Sts\StsClient:
+    class: Aws\Sts\StsClient
+    factory:
+      - '@Aws\Sdk'
 
