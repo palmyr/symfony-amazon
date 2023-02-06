@@ -7,3 +7,4 @@ services:
       - '@Aws\Sts\StsClient'
     tags:
       - name: 'console.command'
+      - name: 'container.service_subscriber'

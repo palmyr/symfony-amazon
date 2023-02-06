@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Palmyr\SymfonyAws\Command;
 
 use Aws\Sts\StsClient;
-use Symfony\Component\Console\Command\Command;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class GetCallerIdentityCommand extends Command
+class GetCallerIdentityCommand extends AbstractAwsCommand
 {
 
     protected StsClient $stsClient;
 
-    public function __construct(StsClient $stsClient)
+    public function __construct(
+        ContainerInterface $container
+    )
     {
-        $this->stsClient = $stsClient;
-        parent::__construct("sts:get_caller_identity");
+        parent::__construct($container, "sts:get_caller_identity");
     }
 
     protected function configure()
@@ -25,10 +29,17 @@ class GetCallerIdentityCommand extends Command
         parent::configure();
         $this->setDescription("Get account details from the current users session.");
     }
-    protected function runCommand(InputInterface $input, SymfonyStyle $io): int
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        $result = $this->stsClient->getCallerIdentity();
+        $io = new SymfonyStyle($input, $output);
+
+        $result = $this->getStsClient()->getCallerIdentity();
 
         $headers = [
             "Account",
@@ -45,5 +56,21 @@ class GetCallerIdentityCommand extends Command
         $io->table($headers, [$row]);
 
         return self::SUCCESS;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            StsClient::class => StsClient::class,
+        ];
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function getStsClient(): StsClient
+    {
+        return $this->container->get(StsClient::class);
     }
 }
