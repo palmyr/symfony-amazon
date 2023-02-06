@@ -15,4 +15,5 @@ services:
     class: Aws\Sts\StsClient
     factory:
       - '@Aws\Sdk'
+      - 'createSts'
 
