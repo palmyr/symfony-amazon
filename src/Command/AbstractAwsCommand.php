@@ -2,7 +2,11 @@
 
 namespace Palmyr\SymfonyAws\Command;
 
+use Palmyr\SymfonyAws\Factory\SdkFactoryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Psr\Container\ContainerInterface;
 
@@ -18,5 +22,39 @@ abstract class AbstractAwsCommand extends Command implements ServiceSubscriberIn
     {
         $this->container = $container;
         parent::__construct($name);
+    }
+
+    protected function configure()
+    {
+        parent::configure();
+        $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");
+        $this->addOption("region", null, InputArgument::OPTIONAL, "The aws region to use.");
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $sdkFactory = $this->getSdkFactory();
+
+        if ( $profile = (string)$input->getOption("profile") ) {
+            $sdkFactory->setProfile($profile);
+        }
+
+        if ( $region = (string)$input->getOption("region") ) {
+            $sdkFactory->setRegion($region);
+        }
+
+        return self::SUCCESS;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            SdkFactoryInterface::class => SdkFactoryInterface::class,
+        ];
+    }
+
+    private function getSdkFactory(): SdkFactoryInterface
+    {
+        return $this->container->get(SdkFactoryInterface::class);
     }
 }

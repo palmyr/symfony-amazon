@@ -3,8 +3,6 @@ services:
 
   Palmyr\SymfonyAws\Command\GetCallerIdentityCommand:
     class: Palmyr\SymfonyAws\Command\GetCallerIdentityCommand
-    arguments:
-      - '@Aws\Sts\StsClient'
     tags:
       - name: 'console.command'
       - name: 'container.service_subscriber'

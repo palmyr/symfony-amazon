@@ -36,7 +36,7 @@ class GetCallerIdentityCommand extends AbstractAwsCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
+        parent::execute($input, $output);
         $io = new SymfonyStyle($input, $output);
 
         $result = $this->getStsClient()->getCallerIdentity();
