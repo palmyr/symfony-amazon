@@ -10,13 +10,15 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('palmyr_aws');
+        $treeBuilder = new TreeBuilder('symonfy_aws');
 
         $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('sdk')
                     ->children()
                         ->scalarNode('version')->defaultValue("latest")->end()
+                        ->scalarNode('region')->end()
+                        ->scalarNode('profile')->end()
                     ->end() // sdk children
                 ->end() // sdk
             ->end()
