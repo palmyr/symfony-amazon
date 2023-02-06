@@ -60,9 +60,10 @@ class GetCallerIdentityCommand extends AbstractAwsCommand
 
     public static function getSubscribedServices(): array
     {
-        return [
+        $services = parent::getSubscribedServices();
+        return array_merge($services, [
             StsClient::class => StsClient::class,
-        ];
+        ]);
     }
 
     /**
