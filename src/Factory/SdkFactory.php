@@ -70,7 +70,7 @@ class SdkFactory implements SdkFactoryInterface
         $this->propertyAccessor->setValue($this->options, $key, $value);
     }
 
-    public function getProfile(string $profile): ?string
+    public function getProfile(): ?string
     {
         return $this->propertyAccessor->getValue($this->options, '[profile]');
     }
@@ -80,7 +80,7 @@ class SdkFactory implements SdkFactoryInterface
         $this->propertyAccessor->setValue($this->options, '[profile]', $profile);
     }
 
-    public function getRegion(string $region): ?string
+    public function getRegion(): ?string
     {
         return $this->propertyAccessor->getValue($this->options, '[region]');
     }
