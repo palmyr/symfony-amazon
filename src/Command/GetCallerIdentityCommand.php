@@ -21,7 +21,7 @@ class GetCallerIdentityCommand extends AbstractAwsCommand
         ContainerInterface $container
     )
     {
-        parent::__construct($container, "sts:get_caller_identity");
+        parent::__construct($container, "aws:sts:get_caller_identity");
     }
 
     protected function configure()
