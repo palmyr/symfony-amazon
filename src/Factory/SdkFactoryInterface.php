@@ -8,7 +8,7 @@ use Aws\Sdk;
 
 interface SdkFactoryInterface
 {
-    public function build(array $options): Sdk;
+    public function build(array $options = []): Sdk;
 
     public function getProfile(string $profile): ?string;
 

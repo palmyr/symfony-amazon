@@ -28,7 +28,7 @@ class SdkFactory implements SdkFactoryInterface
         $this->options = $options;
     }
 
-    public function build(array $options): Sdk
+    public function build(array $options = []): Sdk
     {
 
         $options = array_merge($this->options, $options);
