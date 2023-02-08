@@ -24,18 +24,11 @@ abstract class AbstractAwsCommand extends Command implements ServiceSubscriberIn
         parent::__construct($name);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function configure()
     {
-        parent::initialize($input, $output);
-
-        if ( !$input->hasOption("profile") ) {
-            $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");
-        }
-
-        if ( !$input->hasOption("region") ) {
-            $this->addOption("region", null, InputArgument::OPTIONAL, "The aws region to use.");
-        }
-
+        parent::configure();
+        $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");
+        $this->addOption("region", null, InputArgument::OPTIONAL, "The aws region to use.");
         $this->setCode([$this, "prepareCommand"]);
     }
 
