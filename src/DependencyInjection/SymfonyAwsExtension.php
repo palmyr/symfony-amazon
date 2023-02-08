@@ -23,6 +23,7 @@ class SymfonyAwsExtension extends Extension
         $container->setParameter("palmyr.aws.sdk.options", $config["sdk"] ?? []);
 
         $loader->load("services.yaml");
+        $loader->load("clients.yaml");
         $loader->load("commands.yaml");
 
 

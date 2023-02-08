@@ -1,0 +1,7 @@
+services:
+
+  Aws\Sts\StsClient:
+    class: Aws\Sts\StsClient
+    factory:
+      - '@Aws\Sdk'
+      - 'createSts'

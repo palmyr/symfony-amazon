@@ -19,9 +19,3 @@ services:
       - '@Palmyr\SymfonyAws\Factory\SdkFactoryInterface'
       - 'build'
 
-  Aws\Sts\StsClient:
-    class: Aws\Sts\StsClient
-    factory:
-      - '@Aws\Sdk'
-      - 'createSts'
-
