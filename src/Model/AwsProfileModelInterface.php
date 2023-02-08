@@ -10,6 +10,8 @@ interface AwsProfileModelInterface
 
     public function getRegion(): string;
 
+    public function getSessionTokenExpiresAt(): ?\DateTimeImmutable;
+
     public function get(string $key): ?string;
 
     public function getData(): array;

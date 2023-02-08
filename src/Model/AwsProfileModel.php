@@ -33,6 +33,15 @@ class AwsProfileModel implements AwsProfileModelInterface
         return $this->get("region");
     }
 
+    public function getSessionTokenExpiresAt(): ?\DateTimeImmutable
+    {
+        if ( !$dateString = $this->get("aws_session_token_expiration") ) {
+            return new \DateTimeImmutable($dateString);
+        }
+
+        return null;
+    }
+
     public function get(string $key): ?string
     {
         if (array_key_exists($key, $this->data)) {

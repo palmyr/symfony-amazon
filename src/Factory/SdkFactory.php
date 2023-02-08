@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Palmyr\SymfonyAws\Factory;
 
 use Aws\Sdk;
+use Palmyr\SymfonyAws\Model\AwsProfileModelInterface;
 use Palmyr\SymfonyAws\Service\AwsIniFileServiceInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -46,6 +47,15 @@ class SdkFactory implements SdkFactoryInterface
                 $options["region"] = "us-east-1";
             }
         }
+
+        return new Sdk($options);
+    }
+
+    public function buildFromProfileModel(AwsProfileModelInterface $profileModel): Sdk
+    {
+        $options = $profileModel->getData();
+
+        $options["profile"] = $profileModel->getProfile();
 
         return new Sdk($options);
     }
