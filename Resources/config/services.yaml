@@ -10,6 +10,7 @@ services:
     arguments:
       - '@Palmyr\SymfonyAws\Service\AwsIniFileServiceInterface'
       - '@property_accessor'
+      - '%palmyr.aws.sdk.options%'
 
   Aws\Sdk:
     class: Aws\Sdk
