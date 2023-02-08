@@ -5,20 +5,25 @@ declare(strict_types=1);
 namespace Palmyr\SymfonyAws\Factory;
 
 use Aws\Sdk;
+use Palmyr\SymfonyAws\Service\AwsIniFileServiceInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class SdkFactory implements SdkFactoryInterface
 {
+
+    protected AwsIniFileServiceInterface $awsIniFileService;
 
     protected PropertyAccessorInterface $propertyAccessor;
 
     protected array $options;
 
     public function __construct(
+        AwsIniFileServiceInterface $awsIniFileService,
         PropertyAccessorInterface $propertyAccessor,
         array $options = []
     )
     {
+        $this->awsIniFileService = $awsIniFileService;
         $this->propertyAccessor = $propertyAccessor;
         $this->options = $options;
     }
@@ -32,8 +37,14 @@ class SdkFactory implements SdkFactoryInterface
             $options["profile"] = "default";
         }
 
+        $profile = $options["profile"];
+
         if ( !isset($options["region"] ) ) {
-            $options["region"] = "us-east-1";
+            if ( $profileData = $this->awsIniFileService->loadProfile($profile) ) {
+                $options["region"] = $profileData->getRegion();
+            } else {
+                $options["region"] = "us-east-1";
+            }
         }
 
         return new Sdk($options);

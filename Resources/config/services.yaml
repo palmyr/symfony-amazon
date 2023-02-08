@@ -1,7 +1,13 @@
 services:
 
+  Palmyr\SymfonyAws\Service\AwsIniFileServiceInterface:
+    class: Palmyr\SymfonyAws\Service\AwsIniFileService
+
   Palmyr\SymfonyAws\Factory\SdkFactoryInterface:
     class: Palmyr\SymfonyAws\Factory\SdkFactory
+    arguments:
+      - '@property_accessor'
+      - '@Palmyr\SymfonyAws\Service\AwsIniFileServiceInterface'
 
   Aws\Sdk:
     class: Aws\Sdk
