@@ -26,7 +26,7 @@ class AwsIniFileService implements AwsIniFileServiceInterface
         $data = $this->parseAwsIni(self::AWS_INI_FILENAME);
 
         if ( array_key_exists($profile, $data) ) {
-            return new AwsProfileModel($profile, $data);
+            return new AwsProfileModel($profile, $data[$profile]);
         }
 
         return null;
