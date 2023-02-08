@@ -24,14 +24,22 @@ abstract class AbstractAwsCommand extends Command implements ServiceSubscriberIn
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        parent::configure();
-        $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");
-        $this->addOption("region", null, InputArgument::OPTIONAL, "The aws region to use.");
+        parent::initialize($input, $output);
+
+        if ( !$input->hasOption("profile") ) {
+            $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");
+        }
+
+        if ( !$input->hasOption("region") ) {
+            $this->addOption("region", null, InputArgument::OPTIONAL, "The aws region to use.");
+        }
+
+        $this->setCode([$this, "prepareCommand"]);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function prepareCommand(InputInterface $input, OutputInterface $output): int
     {
         $sdkFactory = $this->getSdkFactory();
 
@@ -43,7 +51,7 @@ abstract class AbstractAwsCommand extends Command implements ServiceSubscriberIn
             $sdkFactory->setRegion($region);
         }
 
-        return self::SUCCESS;
+        return $this->execute($input, $output);
     }
 
     public static function getSubscribedServices(): array
