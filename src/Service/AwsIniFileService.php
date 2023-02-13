@@ -23,7 +23,7 @@ class AwsIniFileService implements AwsIniFileServiceInterface
 
     public function loadProfile(string $profile, string $filename = self::AWS_INI_FILENAME): ?AwsProfileModelInterface
     {
-        $data = $this->parseAwsIni(self::AWS_INI_FILENAME);
+        $data = $this->parseAwsIni($filename);
 
         if ( array_key_exists($profile, $data) ) {
             return new AwsProfileModel($profile, $data[$profile]);
@@ -34,11 +34,11 @@ class AwsIniFileService implements AwsIniFileServiceInterface
 
     public function saveProfile(AwsProfileModelInterface $awsProfileModel, string $filename = self::AWS_INI_FILENAME): void
     {
-        $data = $this->parseAwsIni(self::AWS_INI_FILENAME);
+        $data = $this->parseAwsIni($filename);
 
         $data[$awsProfileModel->getProfile()] = $awsProfileModel->getData();
 
-        $this->writeAwsIni($data, self::AWS_INI_FILENAME);
+        $this->writeAwsIni($data, $filename);
     }
 
     protected function parseAwsIni(string $filename): array

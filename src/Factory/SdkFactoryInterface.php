@@ -11,7 +11,7 @@ interface SdkFactoryInterface
 {
     public function build(array $options = []): Sdk;
 
-    public function buildFromProfileModel(AwsProfileModelInterface $profileModel): Sdk;
+    public function buildFromProfile(array $options = []): Sdk;
 
     public function getProfile(): ?string;
 

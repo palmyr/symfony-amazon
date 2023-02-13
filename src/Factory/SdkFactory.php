@@ -29,7 +29,15 @@ class SdkFactory implements SdkFactoryInterface
         $this->options = $options;
     }
 
+
+
     public function build(array $options = []): Sdk
+    {
+        $options = array_merge($this->options, $options);
+        return new Sdk($options);
+    }
+
+    public function buildFromProfile(array $options = []): Sdk
     {
 
         $options = array_merge($this->options, $options);
@@ -47,15 +55,6 @@ class SdkFactory implements SdkFactoryInterface
                 $options["region"] = "us-east-1";
             }
         }
-
-        return new Sdk($options);
-    }
-
-    public function buildFromProfileModel(AwsProfileModelInterface $profileModel): Sdk
-    {
-        $options = $profileModel->getData();
-
-        $options["profile"] = $profileModel->getProfile();
 
         return new Sdk($options);
     }
