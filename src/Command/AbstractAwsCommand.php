@@ -24,7 +24,7 @@ abstract class AbstractAwsCommand extends Command implements ServiceSubscriberIn
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->addOption("profile", null, InputArgument::OPTIONAL, "The aws profile to use.");

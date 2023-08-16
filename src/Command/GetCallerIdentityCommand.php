@@ -24,7 +24,7 @@ class GetCallerIdentityCommand extends AbstractAwsCommand
         parent::__construct($container, "aws:sts:get_caller_identity");
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setDescription("Get account details from the current users session.");
